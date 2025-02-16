@@ -21,3 +21,15 @@ export const loginUser = async (email, password) => {
        throw error;
     }
  };
+
+export const signupUser = async (email, password) => {
+    try {
+        const response = await axiosInstance.post('/users/signup', { email, password });
+        const { token } = response.data;
+        await AsyncStorage.setItem('authToken', token); // Save token
+        return response.data;
+    } catch (error) {
+        console.error('Signup Error:', error.message);
+        throw error;
+    }
+};
