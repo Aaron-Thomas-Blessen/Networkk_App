@@ -96,7 +96,10 @@ const Navbar = () => {
                 <View style={styles.menuDropdown}>
                     <TouchableOpacity 
                         style={styles.menuItem}
-                        onPress={() => navigation.navigate('Profile')}
+                        onPress={() => {
+                            navigation.navigate('UserDetails');
+                            setIsMenuOpen(false); // Close the menu after navigation
+                        }}
                     >
                         <Text>Profile</Text>
                     </TouchableOpacity>

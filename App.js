@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
+import UserDetailsForm from './src/User/UserDetails'; // Add this import
 
 const Stack = createStackNavigator();
 
@@ -53,6 +54,15 @@ export default function App() {
                name="Login" 
                component={LoginScreen}
                options={{ headerShown: true }}
+            />
+            {/* Add the UserDetails screen */}
+            <Stack.Screen 
+               name="UserDetails" 
+               component={UserDetailsForm}
+               options={{ 
+                  headerShown: true,
+                  title: 'Profile'
+               }}
             />
          </Stack.Navigator>
       </NavigationContainer>
