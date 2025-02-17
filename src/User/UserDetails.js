@@ -18,6 +18,10 @@ const UserDetailsForm = () => {
     phone: "",
     username: "",
     aadhaar: "",
+    address: "",     // Add these
+    locality: "",    // new
+    latitude: "",    // fields
+    longitude: "",   // here
   });
 
   const [originalData, setOriginalData] = useState({
@@ -26,6 +30,10 @@ const UserDetailsForm = () => {
     phone: "",
     username: "",
     aadhaar: "",
+    address: "",     // Add these
+    locality: "",    // new
+    latitude: "",    // fields
+    longitude: "",   // here
   });
 
   const [errors, setErrors] = useState({});
@@ -45,6 +53,10 @@ const UserDetailsForm = () => {
           phone: userData.phone || "",
           username: userData.username || "",
           aadhaar: userData.aadhaar || "",
+          address: userData.address || "",     // Add these
+          locality: userData.locality || "",   // new
+          latitude: userData.latitude || "",   // fields
+          longitude: userData.longitude || "", // here
         };
         setFormData(formattedData);
         setOriginalData(formattedData); // Store original data
@@ -75,6 +87,14 @@ const UserDetailsForm = () => {
     if (!formData.aadhaar) newErrors.aadhaar = "Aadhaar is required.";
     if (formData.aadhaar && formData.aadhaar.length !== 12)
       newErrors.aadhaar = "Aadhaar must be 12 digits.";
+    
+    // Optional: Add validation for latitude and longitude
+    if (formData.latitude && (isNaN(formData.latitude) || formData.latitude < -90 || formData.latitude > 90)) {
+      newErrors.latitude = "Invalid latitude value";
+    }
+    if (formData.longitude && (isNaN(formData.longitude) || formData.longitude < -180 || formData.longitude > 180)) {
+      newErrors.longitude = "Invalid longitude value";
+    }
 
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
@@ -230,6 +250,71 @@ const UserDetailsForm = () => {
                 editable={isEditing}
                 keyboardType="numeric"
                 maxLength={12}
+              />
+            </View>
+          </View>
+        </View>
+
+        {/* Location Details Section */}
+        <View style={styles.section}>
+          <View style={styles.sectionHeader}>
+            <Icon name="map-pin" size={20} color="#9ca3af" />
+            <Text style={styles.sectionTitle}>Location Details</Text>
+          </View>
+
+          <View style={styles.formGrid}>
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Address</Text>
+              <TextInput
+                style={[
+                  styles.input,
+                  !isEditing && styles.readOnlyInput
+                ]}
+                value={formData.address}
+                onChangeText={(value) => handleInputChange('address', value)}
+                editable={isEditing}
+                multiline
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Locality</Text>
+              <TextInput
+                style={[
+                  styles.input,
+                  !isEditing && styles.readOnlyInput
+                ]}
+                value={formData.locality}
+                onChangeText={(value) => handleInputChange('locality', value)}
+                editable={isEditing}
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Latitude</Text>
+              <TextInput
+                style={[
+                  styles.input,
+                  !isEditing && styles.readOnlyInput
+                ]}
+                value={String(formData.latitude || '')}
+                onChangeText={(value) => handleInputChange('latitude', value)}
+                editable={isEditing}
+                keyboardType="decimal-pad"
+              />
+            </View>
+
+            <View style={styles.inputContainer}>
+              <Text style={styles.label}>Longitude</Text>
+              <TextInput
+                style={[
+                  styles.input,
+                  !isEditing && styles.readOnlyInput
+                ]}
+                value={String(formData.longitude || '')}
+                onChangeText={(value) => handleInputChange('longitude', value)}
+                editable={isEditing}
+                keyboardType="decimal-pad"
               />
             </View>
           </View>
