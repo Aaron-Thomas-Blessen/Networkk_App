@@ -6,10 +6,12 @@ import {
   TouchableOpacity, 
   ScrollView, 
   StyleSheet,
-  ActivityIndicator 
+  ActivityIndicator,
+  SafeAreaView 
 } from 'react-native';
 import axiosInstance from "../../utils/axios";
 import Icon from 'react-native-vector-icons/Feather';
+import UserNav from '../components/Usernav';
 
 const UserDetailsForm = () => {
   const [formData, setFormData] = useState({
@@ -138,211 +140,220 @@ const UserDetailsForm = () => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.content}>
-        {/* Header */}
-        <View style={styles.header}>
-          <Text style={styles.headerTitle}>Profile Settings</Text>
-          {!isEditing && (
-            <TouchableOpacity
-              style={styles.editButton}
-              onPress={handleEditClick}
-            >
-              <Text style={styles.editButtonText}>Edit Profile</Text>
-            </TouchableOpacity>
-          )}
-        </View>
-
-        {/* Message Display */}
-        {message ? (
-          <View style={[
-            styles.messageContainer,
-            message.includes("success") ? styles.successMessage : styles.errorMessage
-          ]}>
-            <Text style={styles.messageText}>{message}</Text>
-          </View>
-        ) : null}
-
-        {/* Personal Information Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Icon name="user" size={20} color="#9ca3af" />
-            <Text style={styles.sectionTitle}>Personal Information</Text>
-          </View>
-
-          <View style={styles.formGrid}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>First Name</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput,
-                  errors.fname && styles.errorInput
-                ]}
-                value={formData.fname}
-                onChangeText={(value) => handleInputChange('fname', value)}
-                editable={isEditing}
-              />
-              {errors.fname && (
-                <Text style={styles.errorText}>{errors.fname}</Text>
+    <SafeAreaView style={styles.mainContainer}>
+      <UserNav />
+      <View style={styles.container}>
+        <ScrollView>
+          <View style={styles.content}>
+            {/* Header */}
+            <View style={styles.header}>
+              <Text style={styles.headerTitle}>Profile Settings</Text>
+              {!isEditing && (
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={handleEditClick}
+                >
+                  <Text style={styles.editButtonText}>Edit Profile</Text>
+                </TouchableOpacity>
               )}
             </View>
 
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Last Name</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput
-                ]}
-                value={formData.lname}
-                onChangeText={(value) => handleInputChange('lname', value)}
-                editable={isEditing}
-              />
+            {/* Message Display */}
+            {message ? (
+              <View style={[
+                styles.messageContainer,
+                message.includes("success") ? styles.successMessage : styles.errorMessage
+              ]}>
+                <Text style={styles.messageText}>{message}</Text>
+              </View>
+            ) : null}
+
+            {/* Personal Information Section */}
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Icon name="user" size={20} color="#9ca3af" />
+                <Text style={styles.sectionTitle}>Personal Information</Text>
+              </View>
+
+              <View style={styles.formGrid}>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>First Name</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput,
+                      errors.fname && styles.errorInput
+                    ]}
+                    value={formData.fname}
+                    onChangeText={(value) => handleInputChange('fname', value)}
+                    editable={isEditing}
+                  />
+                  {errors.fname && (
+                    <Text style={styles.errorText}>{errors.fname}</Text>
+                  )}
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Last Name</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput
+                    ]}
+                    value={formData.lname}
+                    onChangeText={(value) => handleInputChange('lname', value)}
+                    editable={isEditing}
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Username</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput
+                    ]}
+                    value={formData.username}
+                    onChangeText={(value) => handleInputChange('username', value)}
+                    editable={isEditing}
+                  />
+                </View>
+              </View>
             </View>
 
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Username</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput
-                ]}
-                value={formData.username}
-                onChangeText={(value) => handleInputChange('username', value)}
-                editable={isEditing}
-              />
+            {/* Contact Information Section */}
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Icon name="phone" size={20} color="#9ca3af" />
+                <Text style={styles.sectionTitle}>Contact Information</Text>
+              </View>
+
+              <View style={styles.formGrid}>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Phone Number</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput
+                    ]}
+                    value={formData.phone}
+                    onChangeText={(value) => handleInputChange('phone', value)}
+                    editable={isEditing}
+                    keyboardType="phone-pad"
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Aadhaar Number</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput
+                    ]}
+                    value={formData.aadhaar}
+                    onChangeText={(value) => handleInputChange('aadhaar', value)}
+                    editable={isEditing}
+                    keyboardType="numeric"
+                    maxLength={12}
+                  />
+                </View>
+              </View>
             </View>
+
+            {/* Location Details Section */}
+            <View style={styles.section}>
+              <View style={styles.sectionHeader}>
+                <Icon name="map-pin" size={20} color="#9ca3af" />
+                <Text style={styles.sectionTitle}>Location Details</Text>
+              </View>
+
+              <View style={styles.formGrid}>
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Address</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput
+                    ]}
+                    value={formData.address}
+                    onChangeText={(value) => handleInputChange('address', value)}
+                    editable={isEditing}
+                    multiline
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Locality</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput
+                    ]}
+                    value={formData.locality}
+                    onChangeText={(value) => handleInputChange('locality', value)}
+                    editable={isEditing}
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Latitude</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput
+                    ]}
+                    value={String(formData.latitude || '')}
+                    onChangeText={(value) => handleInputChange('latitude', value)}
+                    editable={isEditing}
+                    keyboardType="decimal-pad"
+                  />
+                </View>
+
+                <View style={styles.inputContainer}>
+                  <Text style={styles.label}>Longitude</Text>
+                  <TextInput
+                    style={[
+                      styles.input,
+                      !isEditing && styles.readOnlyInput
+                    ]}
+                    value={String(formData.longitude || '')}
+                    onChangeText={(value) => handleInputChange('longitude', value)}
+                    editable={isEditing}
+                    keyboardType="decimal-pad"
+                  />
+                </View>
+              </View>
+            </View>
+
+            {/* Action Buttons */}
+            {isEditing && (
+              <View style={styles.buttonContainer}>
+                <TouchableOpacity
+                  style={styles.saveButton}
+                  onPress={handleSubmit}
+                >
+                  <Text style={styles.saveButtonText}>Save Changes</Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={styles.cancelButton}
+                  onPress={handleCancelClick}
+                >
+                  <Text style={styles.cancelButtonText}>Cancel</Text>
+                </TouchableOpacity>
+              </View>
+            )}
           </View>
-        </View>
-
-        {/* Contact Information Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Icon name="phone" size={20} color="#9ca3af" />
-            <Text style={styles.sectionTitle}>Contact Information</Text>
-          </View>
-
-          <View style={styles.formGrid}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Phone Number</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput
-                ]}
-                value={formData.phone}
-                onChangeText={(value) => handleInputChange('phone', value)}
-                editable={isEditing}
-                keyboardType="phone-pad"
-              />
-            </View>
-
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Aadhaar Number</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput
-                ]}
-                value={formData.aadhaar}
-                onChangeText={(value) => handleInputChange('aadhaar', value)}
-                editable={isEditing}
-                keyboardType="numeric"
-                maxLength={12}
-              />
-            </View>
-          </View>
-        </View>
-
-        {/* Location Details Section */}
-        <View style={styles.section}>
-          <View style={styles.sectionHeader}>
-            <Icon name="map-pin" size={20} color="#9ca3af" />
-            <Text style={styles.sectionTitle}>Location Details</Text>
-          </View>
-
-          <View style={styles.formGrid}>
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Address</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput
-                ]}
-                value={formData.address}
-                onChangeText={(value) => handleInputChange('address', value)}
-                editable={isEditing}
-                multiline
-              />
-            </View>
-
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Locality</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput
-                ]}
-                value={formData.locality}
-                onChangeText={(value) => handleInputChange('locality', value)}
-                editable={isEditing}
-              />
-            </View>
-
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Latitude</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput
-                ]}
-                value={String(formData.latitude || '')}
-                onChangeText={(value) => handleInputChange('latitude', value)}
-                editable={isEditing}
-                keyboardType="decimal-pad"
-              />
-            </View>
-
-            <View style={styles.inputContainer}>
-              <Text style={styles.label}>Longitude</Text>
-              <TextInput
-                style={[
-                  styles.input,
-                  !isEditing && styles.readOnlyInput
-                ]}
-                value={String(formData.longitude || '')}
-                onChangeText={(value) => handleInputChange('longitude', value)}
-                editable={isEditing}
-                keyboardType="decimal-pad"
-              />
-            </View>
-          </View>
-        </View>
-
-        {/* Action Buttons */}
-        {isEditing && (
-          <View style={styles.buttonContainer}>
-            <TouchableOpacity
-              style={styles.saveButton}
-              onPress={handleSubmit}
-            >
-              <Text style={styles.saveButtonText}>Save Changes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={styles.cancelButton}
-              onPress={handleCancelClick}
-            >
-              <Text style={styles.cancelButtonText}>Cancel</Text>
-            </TouchableOpacity>
-          </View>
-        )}
+        </ScrollView>
       </View>
-    </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
+  mainContainer: {
+    flex: 1,
+    backgroundColor: '#f5f5f5',
+  },
   container: {
     flex: 1,
     backgroundColor: '#f5f5f5',
