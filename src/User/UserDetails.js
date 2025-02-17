@@ -20,6 +20,14 @@ const UserDetailsForm = () => {
     aadhaar: "",
   });
 
+  const [originalData, setOriginalData] = useState({
+    fname: "",
+    lname: "",
+    phone: "",
+    username: "",
+    aadhaar: "",
+  });
+
   const [errors, setErrors] = useState({});
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(true);
@@ -31,13 +39,15 @@ const UserDetailsForm = () => {
       try {
         const response = await axiosInstance.get('/users/d/me');
         const userData = response.data;
-        setFormData({
+        const formattedData = {
           fname: userData.fname || "",
           lname: userData.lname || "",
           phone: userData.phone || "",
           username: userData.username || "",
           aadhaar: userData.aadhaar || "",
-        });
+        };
+        setFormData(formattedData);
+        setOriginalData(formattedData); // Store original data
       } catch (error) {
         console.error("Error fetching user data:", error);
         setMessage("Failed to load user data");
@@ -94,8 +104,9 @@ const UserDetailsForm = () => {
 
   const handleCancelClick = () => {
     setIsEditing(false);
-    // Reset form data to original values
-    fetchUserData();
+    setFormData(originalData); // Reset to original data
+    setErrors({}); // Clear any validation errors
+    setMessage(""); // Clear any messages
   };
 
   if (loading) {
