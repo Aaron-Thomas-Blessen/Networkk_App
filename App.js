@@ -7,6 +7,7 @@ import LoginScreen from './src/screens/LoginScreen';
 import SellerLogin from './src/screens/SellerLogin';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import UserDetailsForm from './src/User/UserDetails'; // Add this import
+import SellerDetailsForm from './src/Seller/SellerDetails'; // Add this import
 
 const Stack = createStackNavigator();
 
@@ -71,6 +72,14 @@ export default function App() {
                options={{ 
                   headerShown: true,
                   title: 'Service Provider Login'
+               }}
+            />
+            <Stack.Screen 
+               name="SellerDetails" 
+               component={SellerDetailsForm}
+               options={{ 
+                  headerShown: true,
+                  title: 'Service Provider Profile'
                }}
             />
          </Stack.Navigator>

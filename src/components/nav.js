@@ -97,8 +97,13 @@ const Navbar = () => {
                     <TouchableOpacity 
                         style={styles.menuItem}
                         onPress={() => {
-                            navigation.navigate('UserDetails');
-                            setIsMenuOpen(false); // Close the menu after navigation
+                            // Navigate based on user type
+                            if (userType === 'seller') {
+                                navigation.navigate('SellerDetails');
+                            } else {
+                                navigation.navigate('UserDetails');
+                            }
+                            setIsMenuOpen(false);
                         }}
                     >
                         <Text>Profile</Text>
