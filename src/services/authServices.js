@@ -33,3 +33,31 @@ export const signupUser = async (email, password) => {
         throw error;
     }
 };
+
+export const loginServiceProvider = async (email, password) => {
+    try {
+        const response = await axiosInstance.post('/serviceProviders/signin', { email, password });
+        const { token } = response.data;
+        await AsyncStorage.setItem('authToken', token);
+        await AsyncStorage.setItem('userType', 'seller');
+        await AsyncStorage.setItem('userEmail', email);
+        return response.data;
+    } catch (error) {
+        console.error('Service Provider Login Error:', error.message);
+        throw error;
+    }
+};
+
+export const signupServiceProvider = async (email, password) => {
+    try {
+        const response = await axiosInstance.post('/serviceProviders/signup', { email, password });
+        const { token } = response.data;
+        await AsyncStorage.setItem('authToken', token);
+        await AsyncStorage.setItem('userType', 'seller');
+        await AsyncStorage.setItem('userEmail', email);
+        return response.data;
+    } catch (error) {
+        console.error('Service Provider Signup Error:', error.message);
+        throw error;
+    }
+};

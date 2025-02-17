@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import HomeScreen from './src/screens/HomeScreen';
 import LoginScreen from './src/screens/LoginScreen';
+import SellerLogin from './src/screens/SellerLogin';
 import { ActivityIndicator, View, StyleSheet } from 'react-native';
 import UserDetailsForm from './src/User/UserDetails'; // Add this import
 
@@ -62,6 +63,14 @@ export default function App() {
                options={{ 
                   headerShown: true,
                   title: 'Profile'
+               }}
+            />
+            <Stack.Screen 
+               name="SellerLogin" 
+               component={SellerLogin}
+               options={{ 
+                  headerShown: true,
+                  title: 'Service Provider Login'
                }}
             />
          </Stack.Navigator>

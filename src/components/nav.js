@@ -64,7 +64,7 @@ const Navbar = () => {
                             </TouchableOpacity>
                             <TouchableOpacity 
                                 style={styles.signInButton}
-                                onPress={() => navigation.navigate('Register')}
+                                onPress={() => navigation.navigate('SellerLogin')}
                             >
                                 <Text style={styles.signInText}>Sign Up</Text>
                             </TouchableOpacity>
